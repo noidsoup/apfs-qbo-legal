@@ -4,11 +4,158 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>APFS Database App - Connect</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 44rem; margin: 1.5rem auto; padding: 0 1rem; line-height: 1.5; }
+    code, pre { background: #f4f4f5; padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.9em; }
+    pre { padding: 1rem; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+    .warn { background: #fff8e6; border: 1px solid #e6c200; padding: 0.75rem 1rem; border-radius: 6px; }
+    .ok { background: #e8f5e9; border: 1px solid #2e7d32; padding: 0.75rem 1rem; border-radius: 6px; }
+    button { font-size: 1rem; padding: 0.5rem 1rem; cursor: pointer; }
+    label { display: block; margin-top: 0.75rem; font-weight: 600; }
+    input[type="text"] { width: 100%; max-width: 100%; box-sizing: border-box; padding: 0.35rem; }
+  </style>
 </head>
 <body>
   <h1>Connect / Reconnect QuickBooks</h1>
-  <p>Use the APFS Database App OAuth flow to authorize or reconnect QuickBooks Online access.</p>
-  <p>If you need assistance, contact: support@aplaceforseniors.org</p>
-  <p><a href="./index.html">Back to app home</a></p>
+
+  <!--
+    Deploy checklist:
+    1. Set INTUIT_CLIENT_ID below to your Intuit *Production* Client ID (Keys & OAuth → Production).
+       Client ID is public in OAuth (safe in static HTML). Client secret never goes here.
+    2. REDIRECT_URI must match exactly what is listed under Intuit → Settings → Redirect URIs
+       (this file's public URL).
+  -->
+  <script>
+    const INTUIT_CLIENT_ID = "";
+    const REDIRECT_URI = "https://noidsoup.github.io/apfs-qbo-legal/connect.html";
+    const SCOPE = "com.intuit.quickbooks.accounting";
+    const AUTH_BASE = "https://appcenter.intuit.com/connect/oauth2";
+    const STATE_KEY = "apfs_qbo_oauth_state";
+
+    function randomState() {
+      const a = new Uint8Array(16);
+      crypto.getRandomValues(a);
+      return Array.from(a, function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+    }
+
+    function parseQuery() {
+      var q = {};
+      var s = window.location.search;
+      if (!s || s.length < 2) return q;
+      s.substring(1).split("&").forEach(function (pair) {
+        var i = pair.indexOf("=");
+        var k = decodeURIComponent(i < 0 ? pair : pair.slice(0, i));
+        var v = decodeURIComponent(i < 0 ? "" : pair.slice(i + 1));
+        q[k] = v;
+      });
+      return q;
+    }
+
+    function buildAuthorizeUrl(state) {
+      var p = new URLSearchParams({
+        client_id: INTUIT_CLIENT_ID,
+        redirect_uri: REDIRECT_URI,
+        response_type: "code",
+        scope: SCOPE,
+        state: state
+      });
+      return AUTH_BASE + "?" + p.toString();
+    }
+
+    function main() {
+      var root = document.getElementById("app");
+      var q = parseQuery();
+
+      if (q.error) {
+        root.innerHTML =
+          '<p class="warn"><strong>Authorization error:</strong> ' +
+          String(q.error).replace(/</g, "&lt;") +
+          (q.error_description ? (" — " + String(q.error_description).replace(/</g, "&lt;")) : "") +
+          "</p>" +
+          '<p><a href="./connect.html">Try again</a></p>';
+        return;
+      }
+
+      if (q.code) {
+        var expected = sessionStorage.getItem(STATE_KEY);
+        sessionStorage.removeItem(STATE_KEY);
+        if (q.state && expected && q.state !== expected) {
+          root.innerHTML =
+            '<p class="warn"><strong>State mismatch.</strong> Start connect from this same browser tab, or clear site data and try again.</p>' +
+            '<p><a href="./connect.html">Start over</a></p>';
+          return;
+        }
+
+        var code = q.code;
+        var realm = q.realmId || "";
+
+        root.innerHTML =
+          '<div class="ok"><strong>QuickBooks authorized.</strong> The authorization code cannot become a refresh token in the browser (client secret stays private).</div>' +
+          "<h2>Next: GitHub Actions (recommended)</h2>" +
+          "<ol>" +
+          "<li>Open <strong>APFS-Database</strong> on GitHub → <strong>Actions</strong> → <strong>QBO OAuth code exchange</strong> → <strong>Run workflow</strong>.</li>" +
+          "<li>Paste <strong>Authorization code</strong> below into input <code>authorization_code</code>.</li>" +
+          "<li>Leave <code>redirect_uri</code> as default unless you changed the Intuit Redirect URI.</li>" +
+          (realm ? "<li>Paste <strong>Realm ID</strong> into <code>realm_id</code>.</li>" : "<li>Optional: paste Realm ID into <code>realm_id</code> if you have it.</li>") +
+          "<li>When the job finishes, copy <code>QBO_REFRESH_TOKEN=…</code> from the log into <strong>Settings → Secrets → QBO_REFRESH_TOKEN</strong>.</li>" +
+          "</ol>" +
+          "<h2>Realm ID (company)</h2>" +
+          (realm
+            ? "<p><code id=\"realmOut\">" + realm.replace(/</g, "&lt;") + "</code> <button type=\"button\" id=\"copyRealm\">Copy</button></p>"
+            : "<p class=\"warn\">No <code>realmId</code> in the URL. Check Intuit’s response or your QBO company settings.</p>") +
+          "<h2>Authorization code</h2>" +
+          "<p><code id=\"codeOut\"></code> <button type=\"button\" id=\"copyCode\">Copy code</button></p>" +
+          "<p class=\"warn\">Codes expire in minutes — run the workflow immediately.</p>" +
+          "<p>Then re-run <strong>QBO Sales → Airtable Sync</strong> and <strong>QBO Expenses → Airtable Sync</strong>.</p>" +
+          '<p><a href="./connect.html">Connect another company</a> · <a href="./index.html">Home</a></p>';
+
+        document.getElementById("codeOut").textContent = code;
+        document.getElementById("copyCode").onclick = function () {
+          navigator.clipboard.writeText(code);
+        };
+        var cr = document.getElementById("copyRealm");
+        if (cr && realm) {
+          cr.onclick = function () {
+            navigator.clipboard.writeText(realm);
+          };
+        }
+
+        try {
+          history.replaceState({}, document.title, location.pathname);
+        } catch (e) { /* ignore */ }
+        return;
+      }
+
+      if (!INTUIT_CLIENT_ID) {
+        root.innerHTML =
+          '<p class="warn"><strong>Not configured.</strong> Edit <code>connect.html</code> in the deployed site and set <code>INTUIT_CLIENT_ID</code> to your Intuit <strong>Production</strong> Client ID, then redeploy.</p>' +
+          '<p><a href="./index.html">Back</a></p>';
+        return;
+      }
+
+      root.innerHTML =
+        "<p>Use the APFS Database App to authorize read access for QuickBooks Online (production).</p>" +
+        '<p><button type="button" id="go">Continue to Intuit to sign in</button></p>' +
+        "<p class=\"warn\">After Intuit redirects back here, use the <strong>QBO OAuth code exchange</strong> GitHub Action to obtain <code>QBO_REFRESH_TOKEN</code>. Your client secret is never loaded on this page.</p>" +
+        '<p>If you need assistance: support@aplaceforseniors.org</p>' +
+        '<p><a href="./index.html">Back to app home</a></p>';
+
+      document.getElementById("go").onclick = function () {
+        var st = randomState();
+        sessionStorage.setItem(STATE_KEY, st);
+        window.location.href = buildAuthorizeUrl(st);
+      };
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", main);
+    } else {
+      main();
+    }
+  </script>
+
+  <div id="app">
+    <p>Loading…</p>
+  </div>
 </body>
 </html>

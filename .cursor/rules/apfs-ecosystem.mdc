@@ -1,0 +1,12 @@
+---
+description: APFS cross-repo ecosystem — read before spanning sites/syncs
+alwaysApply: true
+---
+# APFS ecosystem (always)
+
+This repo hosts **static Intuit OAuth connect/disconnect pages** for APFS QuickBooks. QBO → Airtable sync jobs live in **APFS-Database** (GitHub Actions), not here.
+
+**Full map:** `/Users/thedao/Repos/APFS-Database/docs/APFS-ECOSYSTEM.md`  
+**Workspace:** `/Users/thedao/Repos/APFS-Database/apfs.code-workspace`
+
+Never put the Intuit client **secret** in these HTML pages — Client ID + redirect URI only.

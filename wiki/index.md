@@ -9,6 +9,7 @@ Entry point for the project wiki. See [[SCHEMA]] for page types.
 ## Concepts
 
 - [[ai-retrieval-options]] — options for semantic doc search in this repo
+- [[apfs-ecosystem]] — where this repo sits in the APFS workspace
 
 ## Log
 

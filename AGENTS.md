@@ -11,6 +11,7 @@ Workspace: `/Users/thedao/Repos/APFS-Database/apfs.code-workspace`
 |---------|------|
 | APFS-Database | QBO expense/revenue sync workflows, Integrately docs, Airtable |
 | APlaceForSeniorsFrontEnd | Communities site (unrelated to QBO OAuth) |
+| apfs-www | Marketing www companion (unrelated to QBO OAuth) |
 | senior-scraper | Listing scrape (unrelated) |
 
 ## Invariants

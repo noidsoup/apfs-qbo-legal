@@ -9,4 +9,12 @@ This repo hosts **static Intuit OAuth connect/disconnect pages** for APFS QuickB
 **Full map:** `/Users/thedao/Repos/APFS-Database/docs/APFS-ECOSYSTEM.md`  
 **Workspace:** `/Users/thedao/Repos/APFS-Database/apfs.code-workspace`
 
+| Need | Repo |
+|------|------|
+| Airtable / FUB / commissions | APFS-Database |
+| communities.aplaceforseniors.org | APlaceForSeniorsFrontEnd |
+| Marketing www companion | apfs-www |
+| SeniorPlace scrape → WP drafts | senior-scraper |
+| QBO OAuth HTML (here) | apfs-qbo-legal |
+
 Never put the Intuit client **secret** in these HTML pages — Client ID + redirect URI only.

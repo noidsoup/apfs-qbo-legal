@@ -21,6 +21,8 @@ Static HTML for Intuit QuickBooks Online (QBO) OAuth connect / disconnect
 
 - `APFS-Database` — QBO expense/revenue sync workflows, Integrately docs, Airtable
 - `APlaceForSeniorsFrontEnd` — communities site (unrelated to QBO OAuth)
+- `apfs-www` — marketing www companion (unrelated to QBO OAuth), added in commit
+  `f2a7646`
 - `senior-scraper` — listing scrape (unrelated)
 
 Estate map: `APFS-Database/docs/APFS-ECOSYSTEM.md`.

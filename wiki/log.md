@@ -2,6 +2,12 @@
 
 Reverse-chronological change log. Newest on top.
 
+## 2026-08-07
+
+- **Commit `f2a7646`**: Noted `apfs-www` (marketing www companion) as a sibling
+  repo in `AGENTS.md` and `.cursor/rules/apfs-ecosystem.mdc`, keeping QBO agent
+  routing aligned with the five-repo estate map. See [[apfs-ecosystem]].
+
 ## 2026-08-06
 
 - **Commit `2835fc2`**: Replaced the `AGENTS.md` stub with APFS QBO ecosystem

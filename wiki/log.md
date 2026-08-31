@@ -2,6 +2,15 @@
 
 Reverse-chronological change log. Newest on top.
 
+## 2026-08-31
+
+- No commits in the last 24 hours. Working tree changes only: the LanceDB
+  knowledge index under `uncommitted/lancedb_project_knowledge/` was rebuilt
+  on the regular nightly cycle (2026-08-30 ~03:03; `index_meta.json`
+  unchanged: `all-MiniLM-L6-v2`, 384-dim) — expected for [[lancedb-indexer]],
+  no new docs. `.gitignore` was touched in the same window; content is intact
+  and correct (`.loops` + `uncommitted/`).
+
 ## 2026-08-07
 
 - **Commit `f2a7646`**: Noted `apfs-www` (marketing www companion) as a sibling

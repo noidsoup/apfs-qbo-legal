@@ -2,6 +2,12 @@
 
 Reverse-chronological change log. Newest on top.
 
+## 2026-09-07
+
+- No commits in the last 24 hours, no `docs/` changes, `AI_SESSION_MEMORY.md` still
+  empty, working tree clean (`.gitignore` mtime-only touch, content unchanged:
+  `.loops` + `uncommitted/`). Nothing changed since the 2026-08-31 entry.
+
 ## 2026-08-31
 
 - No commits in the last 24 hours. Working tree changes only: the LanceDB

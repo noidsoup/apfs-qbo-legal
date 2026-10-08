@@ -1,0 +1,19 @@
+.gitignore
+  s_5aba629227b66e::t_f01f062da2c782 3-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6e3d3dc7f311f17de0935e1ad85e7ced4b768bed",
+  "prompts": {},
+  "sessions": {
+    "s_5aba629227b66e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6455812b-db88-4599-af46-4274fc9f325b",
+        "model": "unknown"
+      },
+      "human_author": "nicholas andrew eymann <thedao@mac.mynetworksettings.com>"
+    }
+  }
+}

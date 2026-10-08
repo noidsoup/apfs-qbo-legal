@@ -1,0 +1,19 @@
+AGENTS.md
+  s_9a39db5c8da42f::t_2f1a57bef9a263 5-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4ee128c8c21da8a2c92c7228246162aed6414854",
+  "prompts": {},
+  "sessions": {
+    "s_9a39db5c8da42f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c4062034-4398-4213-8107-056d79f38599",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "nicholas andrew eymann <thedao@mac.mynetworksettings.com>"
+    }
+  }
+}

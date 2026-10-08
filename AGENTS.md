@@ -2,6 +2,31 @@
 
 **This repo** is static HTML for **Intuit QuickBooks Online OAuth** connect / disconnect for A Place for Seniors. It is **not** the QBO→Airtable sync implementation.
 
+## Workspace (several sessions at once)
+
+This repo is one of five A Place for Seniors repos, and several Claude sessions often work on them
+at the same time. The workspace rules are in `~/Repos/apfs/AGENTS.md` (a hub folder, not part of
+this repo). The short version:
+
+- **Start with** `~/Repos/apfs/bin/wt doctor` and `~/Repos/apfs/bin/wt ls`: who is working on
+  what, in which worktree, on which PR, and what jobs are running. If a session already covers
+  your topic, message it (ListAgents, then SendMessage) before starting.
+- **Work in a worktree, not the shared checkout** (`~/Repos/apfs-qbo-legal`):
+  `~/Repos/apfs/bin/wt new qbo <type>/<topic> --note "what this is for" --session "<your session name>"`.
+  If the Claude app put you in `.claude/worktrees/<name>`, run `~/Repos/apfs/bin/wt claim . --note "…"`.
+  A small close-out commit on `main` in the shared checkout is fine; switching branches there is
+  not, and the guard hooks refuse commits when it's off `main`.
+- **Static pages only.** The QBO → Airtable sync that uses this OAuth connection lives in
+  APFS-Database.
+- **Siblings:** APFS-Database (Airtable hub, FUB/SeniorPlace syncs, commissions, Hermes crons),
+  APlaceForSeniorsFrontEnd (communities site), apfs-www (marketing WordPress), senior-scraper
+  (SeniorPlace website → WordPress drafts), apfs-qbo-legal (QBO OAuth pages). How they connect:
+  `~/Repos/APFS-Database/docs/APFS-ECOSYSTEM.md`. A change that crosses repos is one PR per repo,
+  linked, saying which ships first.
+- **Cross-repo state:** `~/Repos/apfs/FOLLOWUPS.md` (in flight, blockers, live writes with UTC
+  times) and `~/Repos/apfs/AI_SESSION_MEMORY.md` (cross-repo session log). Re-check any state
+  claim before acting on it.
+
 ## Ecosystem
 
 → `/Users/thedao/Repos/APFS-Database/docs/APFS-ECOSYSTEM.md`  

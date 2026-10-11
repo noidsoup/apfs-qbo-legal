@@ -31,12 +31,77 @@ run_py_tool() {  # run_py_tool <tool> <args...>
   if [ -x ".venv/bin/$tool" ]; then env -u PYTHONPATH -u VIRTUAL_ENV ".venv/bin/$tool" "$@"; return $?; fi
   if [ -x ".venv-lancedb/bin/$tool" ]; then env -u PYTHONPATH -u VIRTUAL_ENV ".venv-lancedb/bin/$tool" "$@"; return $?; fi
   if command -v "$tool" >/dev/null 2>&1; then env -u PYTHONPATH -u VIRTUAL_ENV "$tool" "$@"; return $?; fi
+  # No console script on PATH (common for pytest on macOS): try the module form.
+  if python3 -c "import $tool" >/dev/null 2>&1; then env -u PYTHONPATH -u VIRTUAL_ENV python3 -m "$tool" "$@"; return $?; fi
   echo "   (tool '$tool' not found — install it or point .venv at it)"
   return 127
 }
 
-echo "No runnable checks detected in this repo (none)."
-echo "Define real checks (tests, lint, typecheck, build) and regenerate:"
-echo "  ~/.hermes/scripts/gen-verify-gate.sh"
-echo "Exiting 1 — an undefined gate must never report success."
-exit 1
+# Syntax checks over tracked files (read-only; skips vendored and build dirs).
+tracked_src() {  # tracked_src <pathspec...>
+  git ls-files -- "$@" | grep -v -E '(^|/)(node_modules|vendor|dist|build|\.venv[^/]*|uncommitted)/|\.min\.js$'
+}
+syntax_php() {
+  local f rc=0
+  while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    php -l "$f" >/dev/null 2>&1 || { echo "   php -l: $f"; php -l "$f" 2>&1 | grep -v '^$' | head -2; rc=1; }
+  done < <(tracked_src '*.php')
+  return $rc
+}
+syntax_py() {
+  local py=python3
+  [ -x .venv/bin/python ] && py=.venv/bin/python
+  tracked_src '*.py' | env -u PYTHONPATH -u VIRTUAL_ENV "$py" -c 'import ast, sys
+bad = 0
+for f in sys.stdin.read().splitlines():
+    try:
+        ast.parse(open(f, "rb").read(), f)
+    except SyntaxError as e:
+        print("   python:", f, e); bad = 1
+sys.exit(bad)'
+}
+syntax_js() {
+  local f rc=0
+  while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    node --check "$f" >/dev/null 2>&1 || { echo "   node --check: $f"; node --check "$f" 2>&1 | grep -v '^$' | head -3; rc=1; }
+  done < <(tracked_src '*.js' '*.mjs' '*.cjs')
+  return $rc
+}
+
+# The product is the tracked HTML pages, which the generated steps do not cover. Read-only check:
+# inline <script> blocks must compile (vm.Script parses, nothing runs) and relative .html links
+# must point at a tracked page.
+check_html() {
+  git ls-files -- '*.html' | node -e '
+    const fs = require("fs"), path = require("path"), vm = require("vm");
+    const pages = new Set(fs.readFileSync(0, "utf8").split("\n").filter(Boolean));
+    let bad = 0;
+    for (const f of pages) {
+      const html = fs.readFileSync(f, "utf8");
+      for (const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+        if (/\bsrc=|\btype=["\x27]?(?!text\/javascript)/i.test(m[1])) continue;
+        try { new vm.Script(m[2], { filename: f }); }
+        catch (e) { console.log(`   ${f}: inline script: ${e.message}`); bad = 1; }
+      }
+      for (const m of html.matchAll(/href="(?:\.\/)?([^":#?]+\.html)/gi)) {
+        if (!pages.has(path.normalize(path.join(path.dirname(f), m[1])))) {
+          console.log(`   ${f}: broken link to ${m[1]}`); bad = 1;
+        }
+      }
+    }
+    process.exit(bad);'
+}
+
+run_step "AGENTS.md present" test -f AGENTS.md
+run_step "python parse (3 tracked files)" syntax_py
+run_step "HTML pages: inline scripts compile, relative links resolve" check_html
+
+if [ "$FAILED" -eq 0 ]; then
+  echo "verify: PASS"
+  exit 0
+else
+  echo "verify: FAIL"
+  exit 1
+fi

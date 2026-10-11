@@ -65,6 +65,7 @@ Workspace: `/Users/thedao/Repos/APFS-Database/apfs.code-workspace`
 
 ## Verify
 
-`bash .verify.sh` is the gate, but this repo has no automated checks yet: it prints "No runnable
-checks detected" and exits 1 on purpose, so a missing gate never looks like a pass. Until real checks
-exist, review HTML changes against the invariants above and say that no automated check ran.
+`bash .verify.sh` is the gate; run it before calling a change done. It is read-only and local: the
+inline `<script>` in the HTML pages must compile (parsed, not run), every relative `.html` link must
+point at a tracked page, and the `scripts/` Python must parse. It cannot check the Client ID or the
+Redirect URI against Intuit, so also review HTML changes against the invariants above.

@@ -1,0 +1,33 @@
+.claude/CLAUDE.md
+  s_06f5346c60fbca::t_520b9e1dcaf3f8 1-2
+.claude/rules/apfs-ecosystem.md
+  s_06f5346c60fbca::t_b946c12acd4ad8 4,7-13,15-22,24,26-30
+.claude/rules/context7.md
+  s_06f5346c60fbca::t_187307f79e5958 3
+.claude/rules/project-knowledge-lancedb.md
+  s_06f5346c60fbca::t_3648a79a120b2b 22
+.gitignore
+  s_06f5346c60fbca::t_09cfd1b17f6ddf 6-9
+AGENTS.md
+  s_06f5346c60fbca::t_6ac4a875b0f2c5 5-6,62-63,65-70
+scripts/project_knowledge_lancedb_common.py
+  s_06f5346c60fbca::t_4274b2e9760bd8 51,75-79
+wiki/concepts/apfs-ecosystem.md
+  s_06f5346c60fbca::t_5b444f292c9659 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c209780ddb646b5f7a07374cbf185e58ec0ffdab",
+  "prompts": {},
+  "sessions": {
+    "s_06f5346c60fbca": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b71ad59-634f-4102-bcc8-fe6290effea6",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "nicholas andrew eymann <thedao@nicholass-Mac-Studio.local>"
+    }
+  }
+}

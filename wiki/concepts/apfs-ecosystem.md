@@ -1,7 +1,7 @@
 # APFS Ecosystem Context
 
 Context for where this repo sits in the A Place for Seniors (APFS) workspace,
-per `AGENTS.md` and `.cursor/rules/apfs-ecosystem.mdc` (commit `2835fc2`).
+per `AGENTS.md` and `.claude/rules/apfs-ecosystem.md` (first added as a Cursor rule in commit `2835fc2`).
 
 ## This repo
 

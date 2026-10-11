@@ -2,6 +2,8 @@
 
 **This repo** is static HTML for **Intuit QuickBooks Online OAuth** connect / disconnect for A Place for Seniors. It is **not** the QBO→Airtable sync implementation.
 
+Claude Code loads this file through `.claude/CLAUDE.md`; the rules in `.claude/rules/` load with it.
+
 ## Workspace (several sessions at once)
 
 This repo is one of five A Place for Seniors repos, and several Claude sessions often work on them
@@ -57,6 +59,12 @@ Workspace: `/Users/thedao/Repos/APFS-Database/apfs.code-workspace`
 
 | Need | Open |
 |------|------|
-| Estate map | APFS-Database `docs/APFS-ECOSYSTEM.md` |
-| QBO ↔ Airtable ops | APFS-Database `docs/INDEX.md` → QuickBooks |
+| Estate map | `~/Repos/APFS-Database/docs/APFS-ECOSYSTEM.md` |
+| QBO ↔ Airtable ops | `~/Repos/APFS-Database/docs/INDEX.md` → QuickBooks |
 | Retrieval notes for this repo | `docs/ai-retrieval.md` |
+
+## Verify
+
+`bash .verify.sh` is the gate, but this repo has no automated checks yet: it prints "No runnable
+checks detected" and exits 1 on purpose, so a missing gate never looks like a pass. Until real checks
+exist, review HTML changes against the invariants above and say that no automated check ran.

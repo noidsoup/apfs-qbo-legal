@@ -42,10 +42,18 @@ tracked_src() {  # tracked_src <pathspec...>
   git ls-files -- "$@" | grep -v -E '(^|/)(node_modules|vendor|dist|build|\.venv[^/]*|uncommitted)/|\.min\.js$'
 }
 syntax_php() {
-  local f rc=0
+  # WPCode / Code Snippets files are pasted without an opening <?php tag. A file that starts with
+  # PHP code (not "<?" and not an HTML/template "<") is linted through stdin with the tag added;
+  # otherwise php -l reads the code as HTML and checks nothing. A leading BOM is ignored.
+  local f rc=0 out first
   while IFS= read -r f; do
     [ -n "$f" ] || continue
-    php -l "$f" >/dev/null 2>&1 || { echo "   php -l: $f"; php -l "$f" 2>&1 | grep -v '^$' | head -2; rc=1; }
+    first="$(LC_ALL=C sed $'1s/^\xEF\xBB\xBF//' "$f" | grep -m1 -v '^[[:space:]]*$')"
+    case "$first" in
+      '<'*) out="$(LC_ALL=C sed $'1s/^\xEF\xBB\xBF//' "$f" | php -l 2>&1)" ;;
+      *)    out="$({ echo '<?php'; LC_ALL=C sed $'1s/^\xEF\xBB\xBF//' "$f"; } | php -l 2>&1)" ;;
+    esac
+    echo "$out" | grep -q '^No syntax errors' || { echo "   php -l: $f"; echo "$out" | grep -v '^$' | head -2; rc=1; }
   done < <(tracked_src '*.php')
   return $rc
 }

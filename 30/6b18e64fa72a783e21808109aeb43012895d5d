@@ -1,0 +1,54 @@
+AGENTS.md
+  s_3005a246dc665b::t_764453ff6d9f5a 7-9
+wiki/overview.md
+  s_3005a246dc665b::t_ffc46bbdff12ed 1-51
+wiki/decisions/0001-static-pages-oauth-redirect.md
+  s_3005a246dc665b::t_9cd4d351b65285 1-41
+wiki/concepts/qbo-oauth-token-lifecycle.md
+  s_3005a246dc665b::t_03af4b159c716c 33-34
+  s_3005a246dc665b::t_35d3ac748f27c5 1-32,35-40
+wiki/entities/verify-gate.md
+  s_3005a246dc665b::t_b0709a1f5e4a4f 1-38
+wiki/entities/github-pages-site.md
+  s_3005a246dc665b::t_56a3e1da32578d 1-26
+wiki/concepts/legal-site-source-of-truth.md
+  s_3005a246dc665b::t_a48f0657f70bb9 1-39
+wiki/guides/reconnect-quickbooks.md
+  s_3005a246dc665b::t_a93e32e627c333 1-55
+wiki/gotchas.md
+  s_3005a246dc665b::t_28a0db55b72b3c 1-42
+wiki/index.md
+  s_3005a246dc665b::t_5d1151f7f2d5ac 1-11,13,15-23,25-34,38-54,56,58
+wiki/entities/intuit-developer-app.md
+  s_3005a246dc665b::t_78a3776789e1d9 1-32
+wiki/SCHEMA.md
+  s_3005a246dc665b::t_a9ab44919c607e 1-11,13,15,17,19-80
+wiki/concepts/ai-retrieval-options.md
+  s_3005a246dc665b::t_eca6b9f6660f92 1-12
+wiki/concepts/apfs-ecosystem.md
+  s_3005a246dc665b::t_8183ac74bc1d17 1-12
+wiki/entities/lancedb-indexer.md
+  s_3005a246dc665b::t_ecbfd95825eb4a 1-12
+wiki/entities/lancedb-search.md
+  s_3005a246dc665b::t_3ec10e2009c4d7 1-12
+wiki/guides/semantic-search-setup.md
+  s_3005a246dc665b::t_779d5f38dcdbed 1-12
+wiki/log.md
+  s_3005a246dc665b::t_ac0fe589a84492 1-12,67-72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "306b18e64fa72a783e21808109aeb43012895d5d",
+  "prompts": {},
+  "sessions": {
+    "s_3005a246dc665b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d191f050-3799-404f-88a4-d500fcf7252a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "nicholas andrew eymann <thedao@nicholass-Mac-Studio.local>"
+    }
+  }
+}

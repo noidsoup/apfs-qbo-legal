@@ -1,3 +1,15 @@
+---
+title: APFS ecosystem context
+type: concept
+summary: "Where this repo sits among the five A Place for Seniors repos, and its OAuth-page invariants."
+status: active
+created: 2026-08-06
+updated: 2026-10-19
+last_verified: 2026-10-19
+sources: [AGENTS.md, .claude/rules/apfs-ecosystem.md, "commit 2835fc2", "commit f2a7646"]
+tags: [apfs, ecosystem]
+---
+
 # APFS Ecosystem Context
 
 Context for where this repo sits in the A Place for Seniors (APFS) workspace,

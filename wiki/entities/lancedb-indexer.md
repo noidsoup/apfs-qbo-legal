@@ -1,3 +1,15 @@
+---
+title: LanceDB indexer
+type: entity
+summary: "scripts/index_project_knowledge_lancedb.py: builds the local, offline semantic index of repo markdown and rules."
+status: active
+created: 2026-07-29
+updated: 2026-10-19
+last_verified: 2026-10-19
+sources: [scripts/index_project_knowledge_lancedb.py, scripts/project_knowledge_lancedb_common.py]
+tags: [retrieval, lancedb]
+---
+
 # LanceDB Indexer
 
 `scripts/index_project_knowledge_lancedb.py`

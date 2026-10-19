@@ -1,3 +1,15 @@
+---
+title: AI retrieval options
+type: concept
+summary: "The three semantic doc-search options from docs/ai-retrieval.md; Option A (Python LanceDB sidecar) was chosen."
+status: active
+created: 2026-07-29
+updated: 2026-10-19
+last_verified: 2026-10-19
+sources: [docs/ai-retrieval.md, "commit fcdcf29"]
+tags: [retrieval, lancedb]
+---
+
 # AI Retrieval Options
 
 Source: `docs/ai-retrieval.md`.

@@ -1,3 +1,15 @@
+---
+title: Log
+type: overview
+summary: History of wiki changes. Entries before 2026-10-19 are newest-first; standard entries from 2026-10-19 on are appended at the end.
+status: active
+created: 2026-07-29
+updated: 2026-10-19
+last_verified: 2026-10-19
+sources: []
+tags: [meta]
+---
+
 # Log
 
 Reverse-chronological change log. Newest on top.
@@ -52,3 +64,9 @@ Reverse-chronological change log. Newest on top.
 
 - [[lancedb-indexer]] — `index_project_knowledge_lancedb.py`
 - [[lancedb-search]] — `search_project_knowledge_lancedb.py`
+
+## [2026-10-19] upgrade | Wiki brought to the standard template
+
+- Added frontmatter to every existing page (bodies unchanged; the five content pages spot-checked against `scripts/`, `docs/ai-retrieval.md` and `AGENTS.md`: still accurate). Replaced `SCHEMA.md` with the standard schema plus project notes (public wiki, no Liquid, where truth lives).
+- New: [[overview]], [[gotchas]], [[github-pages-site]], [[intuit-developer-app]], [[verify-gate]], [[qbo-oauth-token-lifecycle]], [[legal-site-source-of-truth]], [[0001-static-pages-oauth-redirect]], [[reconnect-quickbooks]]. Sources: git history, APFS-Database QBO docs/workflows/PRs #101 #239 #240 #243, the GitHub Pages API, `~/Repos/apfs/FOLLOWUPS.md`.
+- `index.md` rebuilt with a "Must know" block; every page reachable. AGENTS.md got the 2-line wiki pointer. 8 → 17 pages.

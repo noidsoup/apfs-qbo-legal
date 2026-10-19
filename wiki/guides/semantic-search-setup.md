@@ -1,3 +1,15 @@
+---
+title: Semantic search setup
+type: guide
+summary: "Create the .venv-lancedb sidecar, build the index, and search it."
+status: active
+created: 2026-07-29
+updated: 2026-10-19
+last_verified: 2026-10-19
+sources: [docs/ai-retrieval.md, requirements-lancedb.txt, "commit fcdcf29"]
+tags: [retrieval, lancedb]
+---
+
 # Semantic Search Setup
 
 This repo hosts the LanceDB project-knowledge sidecar (**Option A** in

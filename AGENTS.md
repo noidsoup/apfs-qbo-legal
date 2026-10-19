@@ -4,6 +4,9 @@
 
 Claude Code loads this file through `.claude/CLAUDE.md`; the rules in `.claude/rules/` load with it.
 
+**Project wiki:** read `wiki/index.md` before non-trivial work; open pages it points to only when relevant.
+After a repeated failure, check `wiki/gotchas.md`. Writing to the wiki: follow `wiki/SCHEMA.md`.
+
 ## Workspace (several sessions at once)
 
 This repo is one of five A Place for Seniors repos, and several Claude sessions often work on them
